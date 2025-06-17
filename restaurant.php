@@ -21,7 +21,7 @@
     </div>
     <div class="restaurant-actions">
       <button class="btn-menu">Меню</button>
-      <button class="btn-book">Забронировать</button>
+      <a href="booking.php" class="btn-book">Забронировать</a>
     </div>
   </section>
   <section class="restaurant-news">

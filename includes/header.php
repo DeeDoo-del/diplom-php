@@ -12,7 +12,7 @@
         <img src="assets/img/avatar.png" alt="Профиль" />
       </a>
     <?php else: ?>
-      <a href="account.php" class="account-btn">Login</a>
+      <a href="login.php" class="account-btn">Login</a>
     <?php endif; ?>
   </nav>
 </header> 

@@ -1,34 +1,56 @@
+<?php include 'includes/head.php'; ?>
+<body>
 <?php include 'includes/header.php'; ?>
 <main>
-  <section class="filters">
-    <label>Цена:
-      <select>
-        <option value="">Любая</option>
-        <option value="$">$</option>
-        <option value="$$">$$</option>
-        <option value="$$$">$$$</option>
-        <option value="$$$$">$$$$</option>
-      </select>
-    </label>
-    <label>Кухня:
-      <select>
-        <option value="">Любая</option>
-        <option value="asian">Азиатская</option>
-        <option value="italian">Итальянская</option>
-        <option value="american">Американская</option>
-        <option value="georgian">Грузинская</option>
-        <option value="japanese">Японская</option>
-      </select>
-    </label>
-    <label>Рейтинг:
-      <select>
-        <option value="">Любой</option>
-        <option value="5">5</option>
-        <option value="4">4+</option>
-        <option value="3">3+</option>
-      </select>
-    </label>
+  <section class="page-header">
+    <h1>Все рестораны</h1>
+    <p>Найдите идеальное место для вашего ужина</p>
   </section>
+  
+  <section class="filters-section">
+    <div class="filters-container">
+      <div class="filter-group">
+        <label>Цена:</label>
+        <select class="filter-select">
+          <option value="">Любая</option>
+          <option value="$">$</option>
+          <option value="$$">$$</option>
+          <option value="$$$">$$$</option>
+          <option value="$$$$">$$$$</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Кухня:</label>
+        <select class="filter-select">
+          <option value="">Любая</option>
+          <option value="asian">Азиатская</option>
+          <option value="italian">Итальянская</option>
+          <option value="american">Американская</option>
+          <option value="georgian">Грузинская</option>
+          <option value="japanese">Японская</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Рейтинг:</label>
+        <select class="filter-select">
+          <option value="">Любой</option>
+          <option value="5">5</option>
+          <option value="4">4+</option>
+          <option value="3">3+</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Метро:</label>
+        <select class="filter-select">
+          <option value="">Любое</option>
+          <option value="novogireevo">Новогиреево</option>
+          <option value="perovo">Перово</option>
+          <option value="shosse">Шоссе Энтузиастов</option>
+        </select>
+      </div>
+    </div>
+  </section>
+  
   <section class="restaurants-list">
     <div class="restaurants-grid">
       <div class="restaurant-card">
@@ -139,4 +161,6 @@
     </div>
   </section>
 </main>
-<?php include 'includes/footer.php'; ?> 
+<?php include 'includes/footer.php'; ?>
+</body>
+</html> 

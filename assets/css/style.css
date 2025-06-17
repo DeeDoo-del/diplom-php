@@ -580,7 +580,7 @@ main {
   display: flex;
   gap: 18px;
 }
-.btn-menu, .btn-book, .btn-route {
+.btn-menu, .btn-book, .btn-route, .btn-cancel, .btn-move {
   background: #ff3c1a;
   color: #fff;
   border: none;
@@ -591,8 +591,13 @@ main {
   cursor: pointer;
   margin-bottom: 8px;
   transition: background 0.2s;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
 }
-.btn-menu:hover, .btn-book:hover, .btn-route:hover {
+.btn-menu:hover, .btn-book:hover, .btn-route:hover, .btn-cancel:hover, .btn-move:hover {
   background: #d32f0f;
 }
 .restaurant-news {
@@ -644,5 +649,532 @@ main {
 @media (max-width: 900px) {
   .restaurant-news-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Стили для страницы restaurants.php */
+.page-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #eee;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+.page-header p {
+  font-size: 1.2rem;
+  color: #666;
+  margin: 0;
+}
+
+.filters-section {
+  background: #fafafa;
+  border-radius: 16px;
+  padding: 24px 32px;
+  margin-bottom: 32px;
+  border: 1px solid #eee;
+}
+
+.filters-container {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-group label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+}
+
+.filter-select {
+  padding: 10px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  min-width: 140px;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #ff3c1a;
+  box-shadow: 0 0 0 3px rgba(255, 60, 26, 0.1);
+}
+
+.filter-select:hover {
+  border-color: #ff3c1a;
+}
+
+/* Улучшенные стили для карточек ресторанов на странице restaurants.php */
+.restaurants-list .restaurant-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.restaurants-list .restaurant-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(255, 60, 26, 0.15);
+  border-color: #ff3c1a;
+}
+
+.restaurants-list .restaurant-card img {
+  transition: transform 0.2s;
+}
+
+.restaurants-list .restaurant-card:hover img {
+  transform: scale(1.05);
+}
+
+.restaurants-list .card-info h3 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 8px 0 6px 0;
+  color: #222;
+}
+
+.restaurants-list .card-info p {
+  margin: 4px 0;
+  color: #666;
+  font-size: 1rem;
+}
+
+/* Адаптивность для страницы restaurants.php */
+@media (max-width: 1200px) {
+  .restaurants-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .restaurants-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .filters-container {
+    gap: 20px;
+  }
+  
+  .filter-group {
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 600px) {
+  .restaurants-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .filters-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  
+  .filter-group {
+    min-width: auto;
+  }
+  
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .page-header p {
+    font-size: 1.1rem;
+  }
+}
+
+/* Стили для уведомлений */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 16px 24px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 500;
+  z-index: 1000;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  max-width: 300px;
+}
+
+.notification.show {
+  transform: translateX(0);
+}
+
+.notification-info {
+  background: #2196F3;
+}
+
+.notification-success {
+  background: #4CAF50;
+}
+
+.notification-warning {
+  background: #FF9800;
+}
+
+.notification-error {
+  background: #f44336;
+}
+
+/* Стили для ошибок в формах */
+.error {
+  border-color: #f44336 !important;
+  box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.1) !important;
+}
+
+/* Анимации для карточек */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.restaurant-card {
+  animation: fadeInUp 0.6s ease;
+}
+
+/* Стили для страницы бронирования */
+.booking-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #eee;
+}
+
+.booking-header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+.booking-header p {
+  font-size: 1.2rem;
+  color: #666;
+  margin: 0;
+}
+
+.booking-form-section {
+  margin-bottom: 32px;
+}
+
+.booking-form-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.booking-form {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  padding: 32px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #333;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #ff3c1a;
+  box-shadow: 0 0 0 3px rgba(255, 60, 26, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  margin-top: 32px;
+}
+
+.btn-primary {
+  background: #ff3c1a;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 32px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: #d32f0f;
+}
+
+.btn-secondary {
+  background: #f5f5f5;
+  color: #666;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 12px 32px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background: #e0e0e0;
+  border-color: #ccc;
+}
+
+.booking-info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.booking-rules {
+  background: #fafafa;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid #eee;
+}
+
+.booking-rules h4 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 16px;
+}
+
+.booking-rules ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.booking-rules li {
+  padding: 8px 0;
+  color: #666;
+  position: relative;
+  padding-left: 20px;
+}
+
+.booking-rules li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+/* Адаптивность для страницы бронирования */
+@media (max-width: 900px) {
+  .booking-form-container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .booking-form {
+    padding: 20px;
+  }
+  
+  .booking-header h1 {
+    font-size: 2rem;
+  }
+  
+  .booking-header p {
+    font-size: 1.1rem;
+  }
+}
+
+/* Стили для страницы входа/регистрации */
+.auth-container {
+  max-width: 500px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  overflow: hidden;
+}
+
+.auth-tabs {
+  display: flex;
+  background: #f5f5f5;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 16px 24px;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.auth-tab.active {
+  background: #fff;
+  color: #ff3c1a;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.auth-tab:hover:not(.active) {
+  background: #e0e0e0;
+}
+
+.auth-content {
+  padding: 32px;
+}
+
+.auth-form {
+  display: none;
+}
+
+.auth-form.active {
+  display: block;
+}
+
+.auth-form .form-group {
+  margin-bottom: 20px;
+}
+
+.auth-form .form-group:last-child {
+  margin-bottom: 24px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.checkbox-label input[type="checkbox"] {
+  display: none;
+}
+
+.checkmark {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  margin-right: 10px;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark {
+  background: #ff3c1a;
+  border-color: #ff3c1a;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.link {
+  color: #ff3c1a;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Адаптивность для страницы входа/регистрации */
+@media (max-width: 600px) {
+  .auth-container {
+    margin: 0 16px;
+  }
+  
+  .auth-content {
+    padding: 24px;
+  }
+  
+  .auth-tab {
+    padding: 14px 16px;
+    font-size: 1rem;
   }
 } 
