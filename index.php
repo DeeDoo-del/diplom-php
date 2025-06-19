@@ -4,8 +4,10 @@
 <main>
   <section class="main-top-grid">
     <div class="main-banner">
-      <img src="assets/img/letneeLeto.jpg" alt="Летняя подборка">
-      <span class="banner-title">Летняя подборка</span>
+      <a href="collection.php?type=summer" class="main-banner" style="display:block">
+        <img src="assets/img/letneeLeto.jpg" alt="Летняя подборка">
+        <span class="banner-title">Летняя подборка</span>
+      </a>
     </div>
     <div class="main-categories">
       <a href="collection.php?type=grill" class="category-item"><img src="assets/img/Бар.jpg" alt="На огне"><span>На огне</span></a>
@@ -166,7 +168,7 @@
         <span>Тематические бары</span>
       </a>
       <a href="collection.php?type=wine" class="pick-item">
-        <img src="assets/img/Винишко.jpg" alt="Винишечко">
+        <img src="assets/img/Винишко.jpg" alt="Винный базар">
         <span>Винный базар</span>
       </a>
       <a href="collection.php?type=openair" class="pick-item">

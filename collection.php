@@ -52,6 +52,12 @@ $collections = [
     'img' => 'assets/img/izumi.jpg',
     'filter' => ['tags' => 'суши']
   ],
+  'summer' => [
+    'title' => 'Летняя подборка',
+    'desc' => 'Лучшие летние рестораны и веранды города.',
+    'img' => 'assets/img/letneeLeto.jpg',
+    'filter' => ['tags' => 'openair']
+  ],
 ];
 
 $type = isset($_GET['type']) ? $_GET['type'] : '';
