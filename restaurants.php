@@ -8,156 +8,101 @@
   </section>
   
   <section class="filters-section">
-    <div class="filters-container">
+    <form class="filters-container" method="get" id="filtersForm">
       <div class="filter-group">
-        <label>Цена:</label>
-        <select class="filter-select">
-          <option value="">Любая</option>
-          <option value="$">$</option>
-          <option value="$$">$$</option>
-          <option value="$$$">$$$</option>
-          <option value="$$$$">$$$$</option>
-        </select>
+        <label>Цена:
+          <select class="filter-select" name="price">
+            <option value="">Любая</option>
+            <option value="$" <?= isset($_GET['price']) && $_GET['price'] == '$' ? 'selected' : '' ?>>$</option>
+            <option value="$$" <?= isset($_GET['price']) && $_GET['price'] == '$$' ? 'selected' : '' ?>>$$</option>
+            <option value="$$$" <?= isset($_GET['price']) && $_GET['price'] == '$$$' ? 'selected' : '' ?>>$$$</option>
+            <option value="$$$$" <?= isset($_GET['price']) && $_GET['price'] == '$$$$' ? 'selected' : '' ?>>$$$$</option>
+          </select>
+        </label>
       </div>
       <div class="filter-group">
-        <label>Кухня:</label>
-        <select class="filter-select">
-          <option value="">Любая</option>
-          <option value="asian">Азиатская</option>
-          <option value="italian">Итальянская</option>
-          <option value="american">Американская</option>
-          <option value="georgian">Грузинская</option>
-          <option value="japanese">Японская</option>
-        </select>
+        <label>Кухня:
+          <select class="filter-select" name="type">
+            <option value="">Любая</option>
+            <option value="asian" <?= isset($_GET['type']) && $_GET['type'] == 'asian' ? 'selected' : '' ?>>Азиатская</option>
+            <option value="italian" <?= isset($_GET['type']) && $_GET['type'] == 'italian' ? 'selected' : '' ?>>Итальянская</option>
+            <option value="american" <?= isset($_GET['type']) && $_GET['type'] == 'american' ? 'selected' : '' ?>>Американская</option>
+            <option value="georgian" <?= isset($_GET['type']) && $_GET['type'] == 'georgian' ? 'selected' : '' ?>>Грузинская</option>
+            <option value="japanese" <?= isset($_GET['type']) && $_GET['type'] == 'japanese' ? 'selected' : '' ?>>Японская</option>
+          </select>
+        </label>
       </div>
       <div class="filter-group">
-        <label>Рейтинг:</label>
-        <select class="filter-select">
-          <option value="">Любой</option>
-          <option value="5">5</option>
-          <option value="4">4+</option>
-          <option value="3">3+</option>
-        </select>
+        <label>Рейтинг:
+          <select class="filter-select" name="rating">
+            <option value="">Любой</option>
+            <option value="5" <?= isset($_GET['rating']) && $_GET['rating'] == '5' ? 'selected' : '' ?>>5</option>
+            <option value="4" <?= isset($_GET['rating']) && $_GET['rating'] == '4' ? 'selected' : '' ?>>4+</option>
+            <option value="3" <?= isset($_GET['rating']) && $_GET['rating'] == '3' ? 'selected' : '' ?>>3+</option>
+          </select>
+        </label>
       </div>
       <div class="filter-group">
-        <label>Метро:</label>
-        <select class="filter-select">
-          <option value="">Любое</option>
-          <option value="novogireevo">Новогиреево</option>
-          <option value="perovo">Перово</option>
-          <option value="shosse">Шоссе Энтузиастов</option>
-        </select>
+        <label>Метро:
+          <select class="filter-select" name="metro">
+            <option value="">Любое</option>
+            <option value="novogireevo" <?= isset($_GET['metro']) && $_GET['metro'] == 'novogireevo' ? 'selected' : '' ?>>Новогиреево</option>
+            <option value="perovo" <?= isset($_GET['metro']) && $_GET['metro'] == 'perovo' ? 'selected' : '' ?>>Перово</option>
+            <option value="shosse" <?= isset($_GET['metro']) && $_GET['metro'] == 'shosse' ? 'selected' : '' ?>>Шоссе Энтузиастов</option>
+          </select>
+        </label>
       </div>
-    </div>
+    </form>
   </section>
   
   <section class="restaurants-list">
     <div class="restaurants-grid">
-      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
-        <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
+      <?php
+      include 'db_connect.php';
+      // Фильтрация
+      $where = [];
+      $params = [];
+      if (!empty($_GET['price'])) {
+        $where[] = "price = '" . $conn->real_escape_string($_GET['price']) . "'";
+      }
+      if (!empty($_GET['type'])) {
+        $where[] = "type = '" . $conn->real_escape_string($_GET['type']) . "'";
+      }
+      if (!empty($_GET['rating'])) {
+        if ($_GET['rating'] == '5') $where[] = "rating >= 5";
+        elseif ($_GET['rating'] == '4') $where[] = "rating >= 4";
+        elseif ($_GET['rating'] == '3') $where[] = "rating >= 3";
+      }
+      if (!empty($_GET['metro'])) {
+        $where[] = "metro = '" . $conn->real_escape_string($_GET['metro']) . "'";
+      }
+      $sql = "SELECT * FROM restaurants";
+      if ($where) {
+        $sql .= " WHERE " . implode(' AND ', $where);
+      }
+      $result = $conn->query($sql);
+      if ($result && $result->num_rows > 0):
+        while($row = $result->fetch_assoc()):
+      ?>
+      <a href="restaurant.php?id=<?= $row['id'] ?>" class="restaurant-card" style="text-decoration:none;color:inherit;">
+        <img src="<?= htmlspecialchars($row['img']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
         <div class="card-info">
-          <div class="rating">4.5</div>
+          <div class="rating"><?= htmlspecialchars($row['rating']) ?></div>
           <div class="tags">
-            <span>#American cuisine</span>
-            <span>#Fastfood</span>
+            <?php foreach(explode(',', $row['tags']) as $tag): ?>
+              <span><?= htmlspecialchars($tag) ?></span>
+            <?php endforeach; ?>
           </div>
-          <h3>BBQ House</h3>
-          <p>Бар · $$$$ · Новогиреево</p>
-          <p>До 23:00</p>
+          <div class="card-meta">
+            <h3><?= htmlspecialchars($row['name']) ?></h3>
+            <p><?= htmlspecialchars($row['type']) ?> · <?= htmlspecialchars($row['price']) ?> · <?= htmlspecialchars($row['metro']) ?></p>
+            <p><?= htmlspecialchars($row['hours']) ?></p>
+          </div>
         </div>
       </a>
-      <!-- Дублируем карточки для примера -->
-      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
-        <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
-        <div class="card-info">
-          <div class="rating">4.5</div>
-          <div class="tags">
-            <span>#American cuisine</span>
-            <span>#Fastfood</span>
-          </div>
-          <h3>BBQ House</h3>
-          <p>Бар · $$$$ · Новогиреево</p>
-          <p>До 23:00</p>
-        </div>
-      </a>
-      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
-        <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
-        <div class="card-info">
-          <div class="rating">4.5</div>
-          <div class="tags">
-            <span>#American cuisine</span>
-            <span>#Fastfood</span>
-          </div>
-          <h3>BBQ House</h3>
-          <p>Бар · $$$$ · Новогиреево</p>
-          <p>До 23:00</p>
-        </div>
-      </a>
-      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
-        <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
-        <div class="card-info">
-          <div class="rating">4.5</div>
-          <div class="tags">
-            <span>#American cuisine</span>
-            <span>#Fastfood</span>
-          </div>
-          <h3>BBQ House</h3>
-          <p>Бар · $$$$ · Новогиреево</p>
-          <p>До 23:00</p>
-        </div>
-      </a>
-      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
-        <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
-        <div class="card-info">
-          <div class="rating">4.5</div>
-          <div class="tags">
-            <span>#American cuisine</span>
-            <span>#Fastfood</span>
-          </div>
-          <h3>BBQ House</h3>
-          <p>Бар · $$$$ · Новогиреево</p>
-          <p>До 23:00</p>
-        </div>
-      </a>
-      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
-        <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
-        <div class="card-info">
-          <div class="rating">4.5</div>
-          <div class="tags">
-            <span>#American cuisine</span>
-            <span>#Fastfood</span>
-          </div>
-          <h3>BBQ House</h3>
-          <p>Бар · $$$$ · Новогиреево</p>
-          <p>До 23:00</p>
-        </div>
-      </a>
-      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
-        <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
-        <div class="card-info">
-          <div class="rating">4.5</div>
-          <div class="tags">
-            <span>#American cuisine</span>
-            <span>#Fastfood</span>
-          </div>
-          <h3>BBQ House</h3>
-          <p>Бар · $$$$ · Новогиреево</p>
-          <p>До 23:00</p>
-        </div>
-      </a>
-      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
-        <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
-        <div class="card-info">
-          <div class="rating">4.5</div>
-          <div class="tags">
-            <span>#American cuisine</span>
-            <span>#Fastfood</span>
-          </div>
-          <h3>BBQ House</h3>
-          <p>Бар · $$$$ · Новогиреево</p>
-          <p>До 23:00</p>
-        </div>
-      </a>
+      <?php endwhile; else: ?>
+        <p>Нет ресторанов для отображения.</p>
+      <?php endif; ?>
     </div>
   </section>
 </main>

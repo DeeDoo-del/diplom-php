@@ -1,14 +1,13 @@
 <?php
 // Данные для подключения к базе данных
-$host = "localhost:5432";
-$username = "postgres";
-$password = "bjsdmw24";
-$database = "public";
-// Подключение к базе данных
-$conn = pg_connect("host=$host dbname=$database user=$user password=$password");
+$host = "localhost";
+$username = "egorcebeka";
+$password = "jJt2AzHMQB5U";
+$database = "egorcebeka";
 
-if (!$conn) {
-    die("Ошибка подключения: " . pg_last_error());
+$conn = new mysqli($host, $username, $password, $database);
+if ($conn->connect_error) {
+    die("Ошибка подключения: " . $conn->connect_error);
 }
-echo "Успешное подключение к базе данных!";
+$conn->set_charset("utf8");
 ?>

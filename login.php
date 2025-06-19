@@ -1,3 +1,74 @@
+<?php
+session_start();
+require_once 'db_connect.php';
+
+$register_error = '';
+$login_error = '';
+
+// Регистрация
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
+    $name = trim($_POST['name']);
+    $email = trim($_POST['email']);
+    $phone = trim($_POST['phone']);
+    $password = $_POST['password'];
+    $password_confirm = $_POST['password_confirm'];
+
+    if ($password !== $password_confirm) {
+        $register_error = "Пароли не совпадают!";
+    } else {
+        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+        if ($stmt->num_rows > 0) {
+            $register_error = "Пользователь с таким email уже существует!";
+        } else {
+            $password_hash = password_hash($password, PASSWORD_DEFAULT);
+            $role = 'client';
+            $stmt = $conn->prepare("INSERT INTO users (name, email, phone, password_hash, role) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssss", $name, $email, $phone, $password_hash, $role);
+            if ($stmt->execute()) {
+                $_SESSION['user'] = [
+                    'id' => $stmt->insert_id,
+                    'name' => $name,
+                    'email' => $email,
+                    'phone' => $phone,
+                    'role' => $role
+                ];
+                header("Location: account.php");
+                exit;
+            } else {
+                $register_error = "Ошибка регистрации. Попробуйте позже.";
+            }
+        }
+        $stmt->close();
+    }
+}
+
+// Вход
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
+    $email = trim($_POST['email']);
+    $password = $_POST['password'];
+
+    $stmt = $conn->prepare("SELECT id, name, email, password_hash, role FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->bind_result($id, $name, $email_db, $password_hash, $role);
+    if ($stmt->fetch() && password_verify($password, $password_hash)) {
+        $_SESSION['user'] = [
+            'id' => $id,
+            'name' => $name,
+            'email' => $email_db,
+            'role' => $role
+        ];
+        header("Location: account.php");
+        exit;
+    } else {
+        $login_error = "Неверный email или пароль!";
+    }
+    $stmt->close();
+}
+?>
 <?php include 'includes/head.php'; ?>
 <body>
 <?php include 'includes/header.php'; ?>
@@ -10,7 +81,11 @@
 
     <div class="auth-content">
       <!-- Форма входа -->
-      <form class="auth-form active" id="loginForm">
+      <?php if($login_error): ?>
+        <div class="notification notification-error" style="margin-bottom:16px;"> <?= htmlspecialchars($login_error) ?> </div>
+      <?php endif; ?>
+      <form class="auth-form active" id="loginForm" method="post">
+        <input type="hidden" name="login" value="1">
         <div class="form-group">
           <label for="loginEmail">Email</label>
           <input type="email" id="loginEmail" name="email" required>
@@ -33,7 +108,11 @@
       </form>
 
       <!-- Форма регистрации -->
-      <form class="auth-form" id="registerForm">
+      <?php if($register_error): ?>
+        <div class="notification notification-error" style="margin-bottom:16px;"> <?= htmlspecialchars($register_error) ?> </div>
+      <?php endif; ?>
+      <form class="auth-form" id="registerForm" method="post">
+        <input type="hidden" name="register" value="1">
         <div class="form-group">
           <label for="registerName">Имя</label>
           <input type="text" id="registerName" name="name" required>
@@ -90,32 +169,26 @@ document.querySelectorAll('.auth-tab').forEach(function(tab) {
 });
 
 // Обработка формы входа
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  if (validateLoginForm(this)) {
-    showNotification('Вход выполнен успешно!', 'success');
-    
-    // Здесь будет отправка данных на сервер
-    setTimeout(() => {
-      window.location.href = 'account.php';
-    }, 1500);
-  }
-});
+// document.getElementById('loginForm').addEventListener('submit', function(e) {
+//   e.preventDefault();
+//   if (validateLoginForm(this)) {
+//     showNotification('Вход выполнен успешно!', 'success');
+//     setTimeout(() => {
+//       window.location.href = 'account.php';
+//     }, 1500);
+//   }
+// });
 
 // Обработка формы регистрации
-document.getElementById('registerForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  if (validateRegisterForm(this)) {
-    showNotification('Регистрация прошла успешно!', 'success');
-    
-    // Здесь будет отправка данных на сервер
-    setTimeout(() => {
-      window.location.href = 'account.php';
-    }, 1500);
-  }
-});
+// document.getElementById('registerForm').addEventListener('submit', function(e) {
+//   e.preventDefault();
+//   if (validateRegisterForm(this)) {
+//     showNotification('Регистрация прошла успешно!', 'success');
+//     setTimeout(() => {
+//       window.location.href = 'account.php';
+//     }, 1500);
+//   }
+// });
 
 function validateLoginForm(form) {
   const email = form.querySelector('#loginEmail');

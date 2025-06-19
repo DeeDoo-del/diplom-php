@@ -21,100 +21,109 @@
     </div>
   </section>
   <section class="filters">
-    <label>Цена:
-      <select>
-        <option value="">Любая</option>
-        <option value="$">$</option>
-        <option value="$$">$$</option>
-        <option value="$$$">$$$</option>
-        <option value="$$$$">$$$$</option>
-      </select>
-    </label>
-    <label>Кухня:
-      <select>
-        <option value="">Любая</option>
-        <option value="asian">Азиатская</option>
-        <option value="italian">Итальянская</option>
-        <option value="american">Американская</option>
-        <option value="georgian">Грузинская</option>
-        <option value="japanese">Японская</option>
-      </select>
-    </label>
-    <label>Рейтинг:
-      <select>
-        <option value="">Любой</option>
-        <option value="5">5</option>
-        <option value="4">4+</option>
-        <option value="3">3+</option>
-      </select>
-    </label>
+    <form method="get" id="filtersForm">
+      <label>Цена:
+        <select name="price" class="filter-select">
+          <option value="">Любая</option>
+          <option value="$" <?= isset($_GET['price']) && $_GET['price'] == '$' ? 'selected' : '' ?>>$</option>
+          <option value="$$" <?= isset($_GET['price']) && $_GET['price'] == '$$' ? 'selected' : '' ?>>$$</option>
+          <option value="$$$" <?= isset($_GET['price']) && $_GET['price'] == '$$$' ? 'selected' : '' ?>>$$$</option>
+          <option value="$$$$" <?= isset($_GET['price']) && $_GET['price'] == '$$$$' ? 'selected' : '' ?>>$$$$</option>
+        </select>
+      </label>
+      <label>Кухня:
+        <select name="type" class="filter-select">
+          <option value="">Любая</option>
+          <option value="asian" <?= isset($_GET['type']) && $_GET['type'] == 'asian' ? 'selected' : '' ?>>Азиатская</option>
+          <option value="italian" <?= isset($_GET['type']) && $_GET['type'] == 'italian' ? 'selected' : '' ?>>Итальянская</option>
+          <option value="american" <?= isset($_GET['type']) && $_GET['type'] == 'american' ? 'selected' : '' ?>>Американская</option>
+          <option value="georgian" <?= isset($_GET['type']) && $_GET['type'] == 'georgian' ? 'selected' : '' ?>>Грузинская</option>
+          <option value="japanese" <?= isset($_GET['type']) && $_GET['type'] == 'japanese' ? 'selected' : '' ?>>Японская</option>
+        </select>
+      </label>
+      <label>Рейтинг:
+        <select name="rating" class="filter-select">
+          <option value="">Любой</option>
+          <option value="5" <?= isset($_GET['rating']) && $_GET['rating'] == '5' ? 'selected' : '' ?>>5</option>
+          <option value="4" <?= isset($_GET['rating']) && $_GET['rating'] == '4' ? 'selected' : '' ?>>4+</option>
+          <option value="3" <?= isset($_GET['rating']) && $_GET['rating'] == '3' ? 'selected' : '' ?>>3+</option>
+        </select>
+      </label>
+    </form>
   </section>
-  <section class="carousel">
+  <section class="carousel-section">
     <div class="carousel-track">
+      <?php
+      include 'db_connect.php';
+      $sql = "SELECT * FROM restaurants LIMIT 10";
+      $result = $conn->query($sql);
+      if ($result && $result->num_rows > 0):
+        while($row = $result->fetch_assoc()):
+      ?>
       <div class="restaurant-card">
-        <img src="assets/img/Пон.jpg" alt="BBQ House">
+        <img src="<?= htmlspecialchars($row['img']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
         <div class="card-info">
-          <div class="rating">4.5</div>
+          <div class="rating"><?= htmlspecialchars($row['rating']) ?></div>
           <div class="tags">
-            <span>#American cuisine</span>
-            <span>#Fastfood</span>
+            <?php foreach(explode(',', $row['tags']) as $tag): ?>
+              <span><?= htmlspecialchars($tag) ?></span>
+            <?php endforeach; ?>
           </div>
-          <h3>BBQ House</h3>
-          <p>Бар · $$$$ · Новогиреево</p>
-          <p>До 23:00</p>
+          <div class="card-meta">
+            <h3><?= htmlspecialchars($row['name']) ?></h3>
+            <p><?= htmlspecialchars($row['type']) ?> · <?= htmlspecialchars($row['price']) ?> · <?= htmlspecialchars($row['metro']) ?></p>
+            <p><?= htmlspecialchars($row['hours']) ?></p>
+          </div>
         </div>
       </div>
-      <!-- Дублируем карточки для примера -->
-      <div class="restaurant-card">
-        <img src="assets/img/Пон.jpg" alt="BBQ House">
-        <div class="card-info">
-          <div class="rating">4.5</div>
-          <div class="tags">
-            <span>#American cuisine</span>
-            <span>#Fastfood</span>
-          </div>
-          <h3>BBQ House</h3>
-          <p>Бар · $$$$ · Новогиреево</p>
-          <p>До 23:00</p>
-        </div>
-      </div>
-      <div class="restaurant-card">
-        <img src="assets/img/Пон.jpg" alt="BBQ House">
-        <div class="card-info">
-          <div class="rating">4.5</div>
-          <div class="tags">
-            <span>#American cuisine</span>
-            <span>#Fastfood</span>
-          </div>
-          <h3>BBQ House</h3>
-          <p>Бар · $$$$ · Новогиреево</p>
-          <p>До 23:00</p>
-        </div>
-      </div>
-      <!-- ...ещё карточки... -->
+      <?php endwhile; endif; ?>
     </div>
     <a href="restaurants.php" class="show-all">Показать все</a>
   </section>
 
-
   <section class="carousel-section">
     <div class="carousel-title">Сезонные предложения</div>
     <div class="carousel-track">
-      <?php for($i=0;$i<5;$i++): ?>
+      <?php
+      include 'db_connect.php';
+      $where = [];
+      if (!empty($_GET['price'])) {
+        $where[] = "price = '" . $conn->real_escape_string($_GET['price']) . "'";
+      }
+      if (!empty($_GET['type'])) {
+        $where[] = "type = '" . $conn->real_escape_string($_GET['type']) . "'";
+      }
+      if (!empty($_GET['rating'])) {
+        if ($_GET['rating'] == '5') $where[] = "rating >= 5";
+        elseif ($_GET['rating'] == '4') $where[] = "rating >= 4";
+        elseif ($_GET['rating'] == '3') $where[] = "rating >= 3";
+      }
+      $sql = "SELECT * FROM restaurants";
+      if ($where) {
+        $sql .= " WHERE " . implode(' AND ', $where);
+      }
+      $sql .= " ORDER BY rating DESC LIMIT 10";
+      $result = $conn->query($sql);
+      if ($result && $result->num_rows > 0):
+        while($row = $result->fetch_assoc()):
+      ?>
       <div class="restaurant-card">
-        <img src="assets/img/Пон.jpg" alt="BBQ House">
+        <img src="<?= htmlspecialchars($row['img']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
         <div class="card-info">
-          <div class="rating">4.5</div>
+          <div class="rating"><?= htmlspecialchars($row['rating']) ?></div>
           <div class="tags">
-            <span>#Американская кухня</span>
-            <span>#Фастфуд</span>
+            <?php foreach(explode(',', $row['tags']) as $tag): ?>
+              <span><?= htmlspecialchars($tag) ?></span>
+            <?php endforeach; ?>
           </div>
-          <h3>BBQ House</h3>
-          <p>Бар · $$$$ · Новогиреево</p>
-          <p>До 23:00</p>
+          <div class="card-meta">
+            <h3><?= htmlspecialchars($row['name']) ?></h3>
+            <p><?= htmlspecialchars($row['type']) ?> · <?= htmlspecialchars($row['price']) ?> · <?= htmlspecialchars($row['metro']) ?></p>
+            <p><?= htmlspecialchars($row['hours']) ?></p>
+          </div>
         </div>
       </div>
-      <?php endfor; ?>
+      <?php endwhile; endif; ?>
     </div>
   </section>
 
@@ -139,21 +148,29 @@
   <section class="carousel-section">
     <div class="carousel-title">Бесплатная доставка</div>
     <div class="carousel-track">
-      <?php for($i=0;$i<5;$i++): ?>
+      <?php
+      $sql = "SELECT * FROM restaurants WHERE price = '$$' OR price = '$' LIMIT 5";
+      $result = $conn->query($sql);
+      if ($result && $result->num_rows > 0):
+        while($row = $result->fetch_assoc()):
+      ?>
       <div class="restaurant-card">
-        <img src="assets/img/Бар.jpg" alt="BBQ House">
+        <img src="<?= htmlspecialchars($row['img']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
         <div class="card-info">
-          <div class="rating">4.5</div>
+          <div class="rating"><?= htmlspecialchars($row['rating']) ?></div>
           <div class="tags">
-            <span>#Американская кухня</span>
-            <span>#Фастфуд</span>
+            <?php foreach(explode(',', $row['tags']) as $tag): ?>
+              <span><?= htmlspecialchars($tag) ?></span>
+            <?php endforeach; ?>
           </div>
-          <h3>BBQ House</h3>
-          <p>Бар · $$$$ · Новогиреево</p>
-          <p>До 23:00</p>
+          <div class="card-meta">
+            <h3><?= htmlspecialchars($row['name']) ?></h3>
+            <p><?= htmlspecialchars($row['type']) ?> · <?= htmlspecialchars($row['price']) ?> · <?= htmlspecialchars($row['metro']) ?></p>
+            <p><?= htmlspecialchars($row['hours']) ?></p>
+          </div>
         </div>
       </div>
-      <?php endfor; ?>
+      <?php endwhile; endif; ?>
     </div>
   </section>
 </main>

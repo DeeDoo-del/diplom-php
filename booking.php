@@ -4,7 +4,24 @@
 <main>
   <section class="booking-header">
     <h1>Бронирование столика</h1>
-    <p>Забронируйте столик в ресторане "Егоркены обедки"</p>
+    <?php
+    include 'db_connect.php';
+    $restaurant_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+    if ($restaurant_id > 0) {
+      $sql = "SELECT * FROM restaurants WHERE id = $restaurant_id";
+    } else {
+      $sql = "SELECT * FROM restaurants LIMIT 1";
+    }
+    $result = $conn->query($sql);
+    $restaurant = $result && $result->num_rows > 0 ? $result->fetch_assoc() : null;
+    ?>
+    <p>
+      <?php if($restaurant): ?>
+        Забронируйте столик в ресторане "<?= htmlspecialchars($restaurant['name']) ?>"
+      <?php else: ?>
+        Ресторан не найден
+      <?php endif; ?>
+    </p>
   </section>
 
   <section class="booking-form-section">
@@ -92,19 +109,24 @@
       </form>
 
       <div class="booking-info">
+        <?php if($restaurant): ?>
         <div class="restaurant-card">
-          <img src="assets/img/roof.jpg" alt="Егоркены обедки">
+          <img src="<?= htmlspecialchars($restaurant['img']) ?>" alt="<?= htmlspecialchars($restaurant['name']) ?>">
           <div class="card-info">
-            <div class="rating">4.5</div>
+            <div class="rating"><?= htmlspecialchars($restaurant['rating']) ?></div>
             <div class="tags">
-              <span>#Суши</span>
-              <span>#ПодОткрытымНебом</span>
+              <?php foreach(explode(',', $restaurant['tags']) as $tag): ?>
+                <span><?= htmlspecialchars($tag) ?></span>
+              <?php endforeach; ?>
             </div>
-            <h3>Егоркены обедки</h3>
-            <p>Москва, Улица пушкина, дом калатушкина 32</p>
-            <p>Открыто с 12 до 00:00</p>
+            <div class="card-meta">
+              <h3><?= htmlspecialchars($restaurant['name']) ?></h3>
+              <p><?= htmlspecialchars($restaurant['address']) ?></p>
+              <p><?= htmlspecialchars($restaurant['hours']) ?></p>
+            </div>
           </div>
         </div>
+        <?php endif; ?>
 
         <div class="booking-rules">
           <h4>Правила бронирования</h4>

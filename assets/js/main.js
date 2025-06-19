@@ -58,14 +58,11 @@ function updateArrowVisibility(track, leftBtn, rightBtn) {
 // Функция для инициализации фильтров
 function initFilters() {
   const filterSelects = document.querySelectorAll('.filter-select');
-  
+  const filtersForm = document.getElementById('filtersForm');
+  if (!filtersForm) return;
   filterSelects.forEach(function(select) {
     select.addEventListener('change', function() {
-      // Здесь можно добавить логику фильтрации
-      console.log('Фильтр изменён:', this.name, this.value);
-      
-      // Пример: можно добавить AJAX запрос для обновления списка ресторанов
-      // filterRestaurants();
+      filtersForm.submit();
     });
   });
 }
