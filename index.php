@@ -8,12 +8,12 @@
       <span class="banner-title">Осенняя осень</span>
     </div>
     <div class="main-categories">
-      <div class="category-item"><img src="assets/img/Бар.jpg" alt="На огне"><span>На огне</span></div>
-      <div class="category-item"><img src="assets/img/Винишко.jpg" alt="Бары"><span>Бары</span></div>
-      <div class="category-item"><img src="assets/img/Груз.jpg" alt="Пицца"><span>Пицца</span></div>
-      <div class="category-item"><img src="assets/img/Зима.jpg" alt="Молекулярная кухня"><span>Молекулярная кухня</span></div>
-      <div class="category-item"><img src="assets/img/Молекулярная.jpg" alt="Грузия"><span>Грузия</span></div>
-      <div class="category-item"><img src="assets/img/Пицца.jpg" alt="Суши"><span>Суши</span></div>
+      <a href="collection.php?type=grill" class="category-item"><img src="assets/img/Бар.jpg" alt="На огне"><span>На огне</span></a>
+      <a href="collection.php?type=bar" class="category-item"><img src="assets/img/Винишко.jpg" alt="Бары"><span>Бары</span></a>
+      <a href="collection.php?type=pizza" class="category-item"><img src="assets/img/Груз.jpg" alt="Пицца"><span>Пицца</span></a>
+      <a href="collection.php?type=molecular" class="category-item"><img src="assets/img/Зима.jpg" alt="Молекулярная кухня"><span>Молекулярная кухня</span></a>
+      <a href="collection.php?type=georgian" class="category-item"><img src="assets/img/Молекулярная.jpg" alt="Грузия"><span>Грузия</span></a>
+      <a href="collection.php?type=sushi" class="category-item"><img src="assets/img/Пицца.jpg" alt="Суши"><span>Суши</span></a>
     </div>
     <div class="main-promo">
       <img src="assets/img/Зима.jpg" alt="А зима то скоро">
@@ -88,7 +88,7 @@
       if ($result && $result->num_rows > 0):
         while($row = $result->fetch_assoc()):
       ?>
-      <div class="restaurant-card">
+      <a href="restaurant.php?id=<?= $row['id'] ?>" class="restaurant-card" style="text-decoration:none;color:inherit;">
         <img src="<?= htmlspecialchars($row['img']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
         <div class="card-info">
           <div class="rating"><?= htmlspecialchars($row['rating']) ?></div>
@@ -103,7 +103,7 @@
             <p><?= htmlspecialchars($row['hours']) ?></p>
           </div>
         </div>
-      </div>
+      </a>
       <?php endwhile; endif; ?>
     </div>
     <a href="restaurants.php" class="show-all">Показать все</a>
@@ -138,7 +138,7 @@
       if ($result && $result->num_rows > 0):
         while($row = $result->fetch_assoc()):
       ?>
-      <div class="restaurant-card">
+      <a href="restaurant.php?id=<?= $row['id'] ?>" class="restaurant-card" style="text-decoration:none;color:inherit;">
         <img src="<?= htmlspecialchars($row['img']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
         <div class="card-info">
           <div class="rating"><?= htmlspecialchars($row['rating']) ?></div>
@@ -153,7 +153,7 @@
             <p><?= htmlspecialchars($row['hours']) ?></p>
           </div>
         </div>
-      </div>
+      </a>
       <?php endwhile; endif; ?>
     </div>
   </section>
@@ -161,18 +161,22 @@
   <section class="weekend-picks">
     <div class="carousel-title">Подборки выходного дня</div>
     <div class="picks-grid">
-      <div class="pick-item">
+      <a href="collection.php?type=bar" class="pick-item">
         <img src="assets/img/ТМбар.jpg" alt="Тематические бары">
         <span>Тематические бары</span>
-      </div>
-      <div class="pick-item">
-        <img src="assets/img/Бар.jpg" alt="Винишечко">
+      </a>
+      <a href="collection.php?type=wine" class="pick-item">
+        <img src="assets/img/Винишко.jpg" alt="Винишечко">
         <span>Винишечко</span>
-      </div>
-      <div class="pick-item">
+      </a>
+      <a href="collection.php?type=openair" class="pick-item">
         <img src="assets/img/Груз.jpg" alt="Под открытым небом">
         <span>Под открытым небом</span>
-      </div>
+      </a>
+      <a href="collection.php?type=pizza" class="pick-item">
+        <img src="assets/img/Пицца.jpg" alt="Пицца">
+        <span>Пицца</span>
+      </a>
     </div>
   </section>
 
@@ -185,7 +189,7 @@
       if ($result && $result->num_rows > 0):
         while($row = $result->fetch_assoc()):
       ?>
-      <div class="restaurant-card">
+      <a href="restaurant.php?id=<?= $row['id'] ?>" class="restaurant-card" style="text-decoration:none;color:inherit;">
         <img src="<?= htmlspecialchars($row['img']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
         <div class="card-info">
           <div class="rating"><?= htmlspecialchars($row['rating']) ?></div>
@@ -200,7 +204,7 @@
             <p><?= htmlspecialchars($row['hours']) ?></p>
           </div>
         </div>
-      </div>
+      </a>
       <?php endwhile; endif; ?>
     </div>
   </section>
@@ -208,3 +212,16 @@
 <?php include 'includes/footer.php'; ?>
 </body>
 </html>
+
+.category-item span, .pick-item span {
+  color: #222 !important;
+  text-decoration: none !important;
+  font-weight: 500;
+}
+.category-item:visited span, .pick-item:visited span {
+  color: #222 !important;
+}
+.category-item:hover span, .pick-item:hover span {
+  color: #222 !important;
+  text-decoration: none !important;
+}

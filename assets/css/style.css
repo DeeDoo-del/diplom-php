@@ -231,7 +231,7 @@ main {
   display: grid;
   grid-template-columns: 2fr 2fr 1fr;
   gap: 24px;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 .main-banner {
   position: relative;
@@ -257,34 +257,48 @@ main {
 .main-categories {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr 1fr;
   gap: 16px;
   height: 350px;
 }
 .category-item {
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  position: relative;
+  border-radius: 18px;
   overflow: hidden;
-  text-align: center;
-  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  height: 100%;
+  min-height: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 0 4px 0;
-  transition: box-shadow 0.2s;
+  align-items: stretch;
+  justify-content: flex-end;
+  padding: 0;
+  background: #000;
 }
 .category-item img {
-  width: 60px;
-  height: 60px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 8px;
+  border-radius: 18px;
+  position: absolute;
+  left: 0; top: 0; right: 0; bottom: 0;
+  z-index: 1;
 }
 .category-item span {
-  font-weight: 500;
-  font-size: 1.05rem;
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: bold;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  z-index: 2;
+  background: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  width: auto;
+  min-height: 0;
+  display: block;
 }
 .category-item:hover {
   box-shadow: 0 6px 24px rgba(255,60,26,0.13);
@@ -356,6 +370,7 @@ main {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  text-decoration: none;
 }
 .pick-item {
   background: #fff;
@@ -370,6 +385,7 @@ main {
   padding-bottom: 10px;
   transition: box-shadow 0.2s;
   position: relative;
+  text-decoration: none;
 }
 .pick-item img {
   width: 100%;
@@ -1284,6 +1300,7 @@ main {
     flex-direction: column;
     gap: 8px;
     height: auto;
+    text-decoration: none;
   }
   .category-item {
     flex-direction: row;
@@ -1291,6 +1308,7 @@ main {
     align-items: center;
     padding: 6px 8px;
     border-radius: 8px;
+    text-decoration: none;
   }
   .category-item img {
     width: 38px;
@@ -1433,4 +1451,61 @@ main {
 .card-meta p {
   color: #666;
   font-size: 1rem;
+}
+
+.category-item, .pick-item {
+  text-decoration: none !important;
+  color: #222 !important;
+}
+.category-item:visited, .pick-item:visited {
+  color: #222 !important;
+  text-decoration: none !important;
+}
+.category-item:hover, .pick-item:hover {
+  color: #222 !important;
+  text-decoration: none !important;
+}
+
+/* --- АНИМАЦИИ И HOVER ДЛЯ КАРТОЧЕК --- */
+.restaurant-card, .category-item, .pick-item {
+  transition: box-shadow 0.35s cubic-bezier(.4,0,.2,1), transform 0.35s cubic-bezier(.4,0,.2,1), filter 0.35s, background 0.25s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  will-change: transform, box-shadow, filter;
+  animation: fadeInUp 0.7s cubic-bezier(.4,0,.2,1);
+}
+.restaurant-card:hover, .category-item:hover, .pick-item:hover {
+  box-shadow: 0 8px 32px rgba(255,60,26,0.18), 0 2px 8px rgba(0,0,0,0.10);
+  transform: translateY(-6px) scale(1.025);
+  filter: brightness(1.04) saturate(1.08);
+  background: #fff7f3;
+  z-index: 3;
+}
+.restaurant-card:active, .category-item:active, .pick-item:active {
+  transform: scale(0.98);
+  filter: brightness(0.97);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Плавность для фильтров и кнопок */
+.filter-select, .btn-primary, .btn-secondary, .show-all, .show-all-btn {
+  transition: background 0.25s, color 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+
+/* Плавность для изображений */
+.restaurant-card img, .category-item img, .pick-item img {
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1), filter 0.35s;
+}
+.restaurant-card:hover img, .category-item:hover img, .pick-item:hover img {
+  transform: scale(1.04) rotate(-1deg);
+  filter: brightness(1.08) saturate(1.12);
 } 
