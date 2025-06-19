@@ -4,20 +4,20 @@
 <main>
   <section class="main-top-grid">
     <div class="main-banner">
-      <img src="assets/img/Осень.jpg" alt="Осенняя осень">
-      <span class="banner-title">Осенняя осень</span>
+      <img src="assets/img/letneeLeto.jpg" alt="Летняя подборка">
+      <span class="banner-title">Летняя подборка</span>
     </div>
     <div class="main-categories">
       <a href="collection.php?type=grill" class="category-item"><img src="assets/img/Бар.jpg" alt="На огне"><span>На огне</span></a>
-      <a href="collection.php?type=bar" class="category-item"><img src="assets/img/Винишко.jpg" alt="Бары"><span>Бары</span></a>
-      <a href="collection.php?type=pizza" class="category-item"><img src="assets/img/Груз.jpg" alt="Пицца"><span>Пицца</span></a>
-      <a href="collection.php?type=molecular" class="category-item"><img src="assets/img/Зима.jpg" alt="Молекулярная кухня"><span>Молекулярная кухня</span></a>
-      <a href="collection.php?type=georgian" class="category-item"><img src="assets/img/Молекулярная.jpg" alt="Грузия"><span>Грузия</span></a>
-      <a href="collection.php?type=sushi" class="category-item"><img src="assets/img/Пицца.jpg" alt="Суши"><span>Суши</span></a>
+      <a href="collection.php?type=bar" class="category-item"><img src="assets/img/beluga.jpg" alt="Бары"><span>Бары</span></a>
+      <a href="collection.php?type=pizza" class="category-item"><img src="assets/img/pizza.jpg" alt="Пицца"><span>Пицца</span></a>
+      <a href="collection.php?type=molecular" class="category-item"><img src="assets/img/Молекулярная.jpg" alt="Молекулярная кухня"><span>Молекулярная кухня</span></a>
+      <a href="collection.php?type=georgian" class="category-item"><img src="assets/img/gruz.jpg" alt="Грузия"><span>Грузия</span></a>
+      <a href="collection.php?type=sushi" class="category-item"><img src="assets/img/izumi.jpg" alt="Суши"><span>Суши</span></a>
     </div>
     <div class="main-promo">
-      <img src="assets/img/Зима.jpg" alt="А зима то скоро">
-      <span class="promo-title">А зима то скоро</span>
+      <img src="assets/img/ikra.jpg" alt="Высокая кухня">
+      <span class="promo-title">Высокая кухня</span>
     </div>
   </section>
   <section class="filters">
@@ -94,7 +94,7 @@
           <div class="rating"><?= htmlspecialchars($row['rating']) ?></div>
           <div class="tags">
             <?php foreach(explode(',', $row['tags']) as $tag): ?>
-              <span><?= htmlspecialchars($tag) ?></span>
+              <span><?= htmlspecialchars(trim($tag)) ?></span>
             <?php endforeach; ?>
           </div>
           <div class="card-meta">
@@ -144,7 +144,7 @@
           <div class="rating"><?= htmlspecialchars($row['rating']) ?></div>
           <div class="tags">
             <?php foreach(explode(',', $row['tags']) as $tag): ?>
-              <span><?= htmlspecialchars($tag) ?></span>
+              <span><?= htmlspecialchars(trim($tag)) ?></span>
             <?php endforeach; ?>
           </div>
           <div class="card-meta">
@@ -170,7 +170,7 @@
         <span>Винишечко</span>
       </a>
       <a href="collection.php?type=openair" class="pick-item">
-        <img src="assets/img/Груз.jpg" alt="Под открытым небом">
+        <img src="assets/img/otkrytoeNebo1.jpg" alt="Под открытым небом">
         <span>Под открытым небом</span>
       </a>
       <a href="collection.php?type=pizza" class="pick-item">
@@ -195,7 +195,7 @@
           <div class="rating"><?= htmlspecialchars($row['rating']) ?></div>
           <div class="tags">
             <?php foreach(explode(',', $row['tags']) as $tag): ?>
-              <span><?= htmlspecialchars($tag) ?></span>
+              <span><?= htmlspecialchars(trim($tag)) ?></span>
             <?php endforeach; ?>
           </div>
           <div class="card-meta">
@@ -212,16 +212,3 @@
 <?php include 'includes/footer.php'; ?>
 </body>
 </html>
-
-.category-item span, .pick-item span {
-  color: #222 !important;
-  text-decoration: none !important;
-  font-weight: 500;
-}
-.category-item:visited span, .pick-item:visited span {
-  color: #222 !important;
-}
-.category-item:hover span, .pick-item:hover span {
-  color: #222 !important;
-  text-decoration: none !important;
-}

@@ -110,13 +110,13 @@
 
       <div class="booking-info">
         <?php if($restaurant): ?>
-        <div class="restaurant-card">
+        <a href="restaurant.php?id=<?= $restaurant['id'] ?>" class="restaurant-card" style="text-decoration:none;color:inherit;">
           <img src="<?= htmlspecialchars($restaurant['img']) ?>" alt="<?= htmlspecialchars($restaurant['name']) ?>">
           <div class="card-info">
             <div class="rating"><?= htmlspecialchars($restaurant['rating']) ?></div>
             <div class="tags">
               <?php foreach(explode(',', $restaurant['tags']) as $tag): ?>
-                <span><?= htmlspecialchars($tag) ?></span>
+                <span><?= htmlspecialchars(trim($tag)) ?></span>
               <?php endforeach; ?>
             </div>
             <div class="card-meta">
@@ -125,7 +125,7 @@
               <p><?= htmlspecialchars($restaurant['hours']) ?></p>
             </div>
           </div>
-        </div>
+        </a>
         <?php endif; ?>
 
         <div class="booking-rules">

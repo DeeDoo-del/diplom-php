@@ -25,11 +25,11 @@
   <section class="restaurant-info">
     <div class="restaurant-tags">
       <?php foreach(explode(',', $restaurant['tags']) as $tag): ?>
-        <span class="tag"><?= htmlspecialchars($tag) ?></span>
+        <span class="tag"><?= htmlspecialchars(trim($tag)) ?></span>
       <?php endforeach; ?>
     </div>
     <div class="restaurant-description">
-      Описание ресторана. Здесь будет подробная информация о заведении, его особенностях, кухне, атмосфере и т.д.
+      <?= htmlspecialchars($restaurant['description']) ?>
     </div>
     <div class="restaurant-actions">
       <button class="btn-menu">Меню</button>
@@ -45,7 +45,7 @@
       if ($result && $result->num_rows > 0):
         while($row = $result->fetch_assoc()):
       ?>
-      <div class="restaurant-card">
+      <a href="restaurant.php?id=<?= $row['id'] ?>" class="restaurant-card" style="text-decoration:none;color:inherit;">
         <img src="<?= htmlspecialchars($row['img']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
         <div class="card-info">
           <div class="rating"><?= htmlspecialchars($row['rating']) ?></div>
@@ -60,7 +60,7 @@
             <p><?= htmlspecialchars($row['hours']) ?></p>
           </div>
         </div>
-      </div>
+      </a>
       <?php endwhile; endif; ?>
     </div>
   </section>
@@ -73,7 +73,7 @@
       if ($result && $result->num_rows > 0):
         while($row = $result->fetch_assoc()):
       ?>
-      <div class="restaurant-card">
+      <a href="restaurant.php?id=<?= $row['id'] ?>" class="restaurant-card" style="text-decoration:none;color:inherit;">
         <img src="<?= htmlspecialchars($row['img']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
         <div class="card-info">
           <div class="rating"><?= htmlspecialchars($row['rating']) ?></div>
@@ -88,7 +88,7 @@
             <p><?= htmlspecialchars($row['hours']) ?></p>
           </div>
         </div>
-      </div>
+      </a>
       <?php endwhile; endif; ?>
     </div>
   </section>

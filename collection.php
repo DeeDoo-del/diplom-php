@@ -89,7 +89,7 @@ $collection = isset($collections[$type]) ? $collections[$type] : null;
           <div class="rating"><?= htmlspecialchars($row['rating']) ?></div>
           <div class="tags">
             <?php foreach(explode(',', $row['tags']) as $tag): ?>
-              <span><?= htmlspecialchars($tag) ?></span>
+              <span><?= htmlspecialchars(trim($tag)) ?></span>
             <?php endforeach; ?>
           </div>
           <div class="card-meta">

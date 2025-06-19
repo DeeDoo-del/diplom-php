@@ -114,7 +114,7 @@ $avatar_url = $avatar && file_exists($avatar) ? $avatar : 'assets/img/avatar.png
           <div class="rating"><?= htmlspecialchars($row['rating']) ?></div>
           <div class="tags">
             <?php foreach(explode(',', $row['tags']) as $tag): ?>
-              <span><?= htmlspecialchars($tag) ?></span>
+              <span><?= htmlspecialchars(trim($tag)) ?></span>
             <?php endforeach; ?>
           </div>
           <div class="card-meta">
@@ -140,13 +140,13 @@ $avatar_url = $avatar && file_exists($avatar) ? $avatar : 'assets/img/avatar.png
       if ($result && $result->num_rows > 0):
         while($row = $result->fetch_assoc()):
       ?>
-      <div class="restaurant-card">
+      <a href="restaurant.php?id=<?= $row['id'] ?>" class="restaurant-card" style="text-decoration:none;color:inherit;">
         <img src="<?= htmlspecialchars($row['img']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
         <div class="card-info">
           <div class="rating"><?= htmlspecialchars($row['rating']) ?></div>
           <div class="tags">
             <?php foreach(explode(',', $row['tags']) as $tag): ?>
-              <span><?= htmlspecialchars($tag) ?></span>
+              <span><?= htmlspecialchars(trim($tag)) ?></span>
             <?php endforeach; ?>
           </div>
           <div class="card-meta">
@@ -155,7 +155,7 @@ $avatar_url = $avatar && file_exists($avatar) ? $avatar : 'assets/img/avatar.png
             <p><?= htmlspecialchars($row['hours']) ?></p>
           </div>
         </div>
-      </div>
+      </a>
       <?php endwhile; endif; ?>
     </div>
   </section>
