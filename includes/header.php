@@ -4,8 +4,8 @@
   <button class="burger-menu" id="burgerMenuBtn" aria-label="Открыть меню" style="display:none;">
     &#9776;
   </button>
-  <form class="search-bar">
-    <input type="text" placeholder="Type your request here...">
+  <form class="search-bar" method="get" action="restaurants.php">
+    <input type="text" name="search" placeholder="Type your request here..." value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
     <button type="submit">Search</button>
   </form>
   <nav id="mainNav">

@@ -46,9 +46,9 @@
         <label>Метро:
           <select class="filter-select" name="metro">
             <option value="">Любое</option>
-            <option value="novogireevo" <?= isset($_GET['metro']) && $_GET['metro'] == 'novogireevo' ? 'selected' : '' ?>>Новогиреево</option>
-            <option value="perovo" <?= isset($_GET['metro']) && $_GET['metro'] == 'perovo' ? 'selected' : '' ?>>Перово</option>
-            <option value="shosse" <?= isset($_GET['metro']) && $_GET['metro'] == 'shosse' ? 'selected' : '' ?>>Шоссе Энтузиастов</option>
+            <option value="Новогиреево" <?= isset($_GET['metro']) && $_GET['metro'] == 'Новогиреево' ? 'selected' : '' ?>>Новогиреево</option>
+            <option value="Перово" <?= isset($_GET['metro']) && $_GET['metro'] == 'Перово' ? 'selected' : '' ?>>Перово</option>
+            <option value="Шоссе Энтузиастов" <?= isset($_GET['metro']) && $_GET['metro'] == 'Шоссе Энтузиастов' ? 'selected' : '' ?>>Шоссе Энтузиастов</option>
           </select>
         </label>
       </div>
@@ -66,7 +66,8 @@
         $where[] = "price = '" . $conn->real_escape_string($_GET['price']) . "'";
       }
       if (!empty($_GET['type'])) {
-        $where[] = "type = '" . $conn->real_escape_string($_GET['type']) . "'";
+        $type = $conn->real_escape_string($_GET['type']);
+        $where[] = "tags LIKE '%$type%'";
       }
       if (!empty($_GET['rating'])) {
         if ($_GET['rating'] == '5') $where[] = "rating >= 5";
@@ -75,6 +76,10 @@
       }
       if (!empty($_GET['metro'])) {
         $where[] = "metro = '" . $conn->real_escape_string($_GET['metro']) . "'";
+      }
+      if (!empty($_GET['search'])) {
+        $search = mb_strtolower($conn->real_escape_string($_GET['search']));
+        $where[] = "(LOWER(name) LIKE '%$search%' OR LOWER(tags) LIKE '%$search%')";
       }
       $sql = "SELECT * FROM restaurants";
       if ($where) {

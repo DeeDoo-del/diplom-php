@@ -49,13 +49,41 @@
           <option value="3" <?= isset($_GET['rating']) && $_GET['rating'] == '3' ? 'selected' : '' ?>>3+</option>
         </select>
       </label>
+      <label>Метро:
+        <select name="metro" class="filter-select">
+          <option value="">Любое</option>
+          <option value="Новогиреево" <?= isset($_GET['metro']) && $_GET['metro'] == 'Новогиреево' ? 'selected' : '' ?>>Новогиреево</option>
+          <option value="Перово" <?= isset($_GET['metro']) && $_GET['metro'] == 'Перово' ? 'selected' : '' ?>>Перово</option>
+          <option value="Шоссе Энтузиастов" <?= isset($_GET['metro']) && $_GET['metro'] == 'Шоссе Энтузиастов' ? 'selected' : '' ?>>Шоссе Энтузиастов</option>
+        </select>
+      </label>
     </form>
   </section>
   <section class="carousel-section">
     <div class="carousel-track">
       <?php
       include 'db_connect.php';
-      $sql = "SELECT * FROM restaurants LIMIT 10";
+      $where = [];
+      if (!empty($_GET['price'])) {
+        $where[] = "price = '" . $conn->real_escape_string($_GET['price']) . "'";
+      }
+      if (!empty($_GET['type'])) {
+        $type = $conn->real_escape_string($_GET['type']);
+        $where[] = "tags LIKE '%$type%'";
+      }
+      if (!empty($_GET['rating'])) {
+        if ($_GET['rating'] == '5') $where[] = "rating >= 5";
+        elseif ($_GET['rating'] == '4') $where[] = "rating >= 4";
+        elseif ($_GET['rating'] == '3') $where[] = "rating >= 3";
+      }
+      if (!empty($_GET['metro'])) {
+        $where[] = "metro = '" . $conn->real_escape_string($_GET['metro']) . "'";
+      }
+      $sql = "SELECT * FROM restaurants";
+      if ($where) {
+        $sql .= " WHERE " . implode(' AND ', $where);
+      }
+      $sql .= " LIMIT 10";
       $result = $conn->query($sql);
       if ($result && $result->num_rows > 0):
         while($row = $result->fetch_assoc()):
@@ -85,18 +113,21 @@
     <div class="carousel-title">Сезонные предложения</div>
     <div class="carousel-track">
       <?php
-      include 'db_connect.php';
       $where = [];
       if (!empty($_GET['price'])) {
         $where[] = "price = '" . $conn->real_escape_string($_GET['price']) . "'";
       }
       if (!empty($_GET['type'])) {
-        $where[] = "type = '" . $conn->real_escape_string($_GET['type']) . "'";
+        $type = $conn->real_escape_string($_GET['type']);
+        $where[] = "tags LIKE '%$type%'";
       }
       if (!empty($_GET['rating'])) {
         if ($_GET['rating'] == '5') $where[] = "rating >= 5";
         elseif ($_GET['rating'] == '4') $where[] = "rating >= 4";
         elseif ($_GET['rating'] == '3') $where[] = "rating >= 3";
+      }
+      if (!empty($_GET['metro'])) {
+        $where[] = "metro = '" . $conn->real_escape_string($_GET['metro']) . "'";
       }
       $sql = "SELECT * FROM restaurants";
       if ($where) {
