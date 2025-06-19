@@ -67,8 +67,8 @@ $avatar_url = $avatar && file_exists($avatar) ? $avatar : 'assets/img/avatar.png
 <?php include 'includes/header.php'; ?>
 
 <main>
-  <section class="profile-section" style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;flex-direction:column;">
-    <div style="max-width:340px;width:100%;margin:0 auto;">
+  <section class="profile-section" style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;flex-direction:row;">
+    <div style="max-width:340px;width:100%;margin:0;">
       <form method="post" class="profile-form" enctype="multipart/form-data">
         <h2 style="margin-bottom:16px;">Профиль</h2>
         <?php if($profile_error): ?>
@@ -101,7 +101,7 @@ $avatar_url = $avatar && file_exists($avatar) ? $avatar : 'assets/img/avatar.png
         </div>
       </form>
     </div>
-    <div class="profile-booking-card booking-wide-center">
+    <div class="profile-booking-card booking-wide-center" style="margin:0;">
       <?php
       $sql = "SELECT * FROM restaurants LIMIT 1";
       $result = $conn->query($sql);
@@ -162,6 +162,19 @@ $avatar_url = $avatar && file_exists($avatar) ? $avatar : 'assets/img/avatar.png
 </main>
 <?php include 'includes/footer.php'; ?>
 <style>
+.profile-section {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+@media (max-width: 900px) {
+  .profile-section {
+    flex-direction: column;
+    gap: 18px;
+  }
+}
 .booking-wide-center {
   max-width: 920px;
   width: 100%;

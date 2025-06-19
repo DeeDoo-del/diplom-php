@@ -13,20 +13,20 @@ $collections = [
   'pizza' => [
     'title' => 'Пицца',
     'desc' => 'Где попробовать лучшую пиццу.',
-    'img' => 'assets/img/Груз.jpg',
+    'img' => 'assets/img/pizza.jpg',
     'filter' => ['tags' => 'пицца']
   ],
   'wine' => [
-    'title' => 'Винишечко',
+    'title' => 'Винный базар',
     'desc' => 'Места для ценителей вина и уютных вечеров.',
-    'img' => 'assets/img/Винишко.jpg',
+    'img' => 'assets/img/vinishko.jpg',
     'filter' => ['tags' => 'вино']
   ],
   'openair' => [
     'title' => 'Под открытым небом',
     'desc' => 'Лучшие заведения с верандами и летними площадками.',
-    'img' => 'assets/img/Груз.jpg',
-    'filter' => ['tags' => 'лето']
+    'img' => 'assets/img/otkrytoeNebo1.jpg',
+    'filter' => ['tags' => 'openair']
   ],
   'grill' => [
     'title' => 'На огне',
@@ -37,19 +37,19 @@ $collections = [
   'molecular' => [
     'title' => 'Молекулярная кухня',
     'desc' => 'Современные эксперименты и необычные вкусы.',
-    'img' => 'assets/img/Зима.jpg',
+    'img' => 'assets/img/Молекулярная.jpg',
     'filter' => ['tags' => 'молекулярная']
   ],
   'georgian' => [
     'title' => 'Грузия',
     'desc' => 'Грузинская кухня и атмосфера настоящего Тбилиси.',
-    'img' => 'assets/img/Молекулярная.jpg',
+    'img' => 'assets/img/gruz.jpg',
     'filter' => ['tags' => 'грузинская']
   ],
   'sushi' => [
     'title' => 'Суши',
     'desc' => 'Лучшие суши-бары и японские рестораны.',
-    'img' => 'assets/img/Пицца.jpg',
+    'img' => 'assets/img/izumi.jpg',
     'filter' => ['tags' => 'суши']
   ],
 ];

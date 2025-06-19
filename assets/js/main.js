@@ -81,12 +81,15 @@ function initInteractiveElements() {
 
   // Обработчики для кнопок меню
   document.querySelectorAll('.btn-menu').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      console.log('Открытие меню ресторана');
-      // Здесь можно добавить модальное окно с меню
-      // openMenuModal();
-    });
+    // Только если это кнопка, а не ссылка
+    if (btn.tagName.toLowerCase() === 'button') {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Открытие меню ресторана');
+        // Здесь можно добавить модальное окно с меню
+        // openMenuModal();
+      });
+    }
   });
 
   // Обработчики для кнопок построения маршрута

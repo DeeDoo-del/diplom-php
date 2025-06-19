@@ -167,7 +167,7 @@
       </a>
       <a href="collection.php?type=wine" class="pick-item">
         <img src="assets/img/Винишко.jpg" alt="Винишечко">
-        <span>Винишечко</span>
+        <span>Винный базар</span>
       </a>
       <a href="collection.php?type=openair" class="pick-item">
         <img src="assets/img/otkrytoeNebo1.jpg" alt="Под открытым небом">

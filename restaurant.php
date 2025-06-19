@@ -32,7 +32,11 @@
       <?= htmlspecialchars($restaurant['description']) ?>
     </div>
     <div class="restaurant-actions">
-      <button class="btn-menu">Меню</button>
+      <?php if ($restaurant['id'] == 8): ?>
+        <a href="assets/menu/gorynichmenu_msc_ru.pdf" class="btn-menu" download target="_blank">Меню</a>
+      <?php else: ?>
+        <button class="btn-menu">Меню</button>
+      <?php endif; ?>
       <a href="booking.php?id=<?= $restaurant['id'] ?>" class="btn-book">Забронировать</a>
     </div>
   </section>
