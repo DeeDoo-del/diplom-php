@@ -76,11 +76,15 @@ function initInteractiveElements() {
   document.querySelectorAll('.restaurant-card').forEach(function(card) {
     card.addEventListener('click', function() {
       // Получаем название ресторана из карточки
-      const restaurantName = this.querySelector('h3').textContent;
-      console.log('Переход к ресторану:', restaurantName);
-      
-      // Здесь можно добавить переход на страницу ресторана
-      // window.location.href = 'restaurant.php?name=' + encodeURIComponent(restaurantName);
+      // const restaurantName = this.querySelector('h3').textContent;
+      // console.log('Переход к ресторану:', restaurantName);
+      // Переход на страницу карточки ресторана (заглушка)
+      window.location.href = 'restaurant.php';
+      /*
+      // В будущем, когда карточки будут формироваться динамически и у каждой будет свой id:
+      // const restaurantId = this.dataset.id;
+      // window.location.href = 'restaurant.php?id=' + restaurantId;
+      */
     });
   });
 

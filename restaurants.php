@@ -53,7 +53,7 @@
   
   <section class="restaurants-list">
     <div class="restaurants-grid">
-      <div class="restaurant-card">
+      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
         <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
         <div class="card-info">
           <div class="rating">4.5</div>
@@ -65,9 +65,9 @@
           <p>Бар · $$$$ · Новогиреево</p>
           <p>До 23:00</p>
         </div>
-      </div>
+      </a>
       <!-- Дублируем карточки для примера -->
-      <div class="restaurant-card">
+      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
         <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
         <div class="card-info">
           <div class="rating">4.5</div>
@@ -79,8 +79,8 @@
           <p>Бар · $$$$ · Новогиреево</p>
           <p>До 23:00</p>
         </div>
-      </div>
-      <div class="restaurant-card">
+      </a>
+      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
         <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
         <div class="card-info">
           <div class="rating">4.5</div>
@@ -92,8 +92,8 @@
           <p>Бар · $$$$ · Новогиреево</p>
           <p>До 23:00</p>
         </div>
-      </div>
-      <div class="restaurant-card">
+      </a>
+      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
         <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
         <div class="card-info">
           <div class="rating">4.5</div>
@@ -105,8 +105,8 @@
           <p>Бар · $$$$ · Новогиреево</p>
           <p>До 23:00</p>
         </div>
-      </div>
-      <div class="restaurant-card">
+      </a>
+      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
         <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
         <div class="card-info">
           <div class="rating">4.5</div>
@@ -118,8 +118,8 @@
           <p>Бар · $$$$ · Новогиреево</p>
           <p>До 23:00</p>
         </div>
-      </div>
-      <div class="restaurant-card">
+      </a>
+      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
         <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
         <div class="card-info">
           <div class="rating">4.5</div>
@@ -131,8 +131,8 @@
           <p>Бар · $$$$ · Новогиреево</p>
           <p>До 23:00</p>
         </div>
-      </div>
-      <div class="restaurant-card">
+      </a>
+      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
         <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
         <div class="card-info">
           <div class="rating">4.5</div>
@@ -144,8 +144,8 @@
           <p>Бар · $$$$ · Новогиреево</p>
           <p>До 23:00</p>
         </div>
-      </div>
-      <div class="restaurant-card">
+      </a>
+      <a href="restaurant.php" class="restaurant-card" style="text-decoration:none;color:inherit;">
         <img src="assets/img/bbqhouse.jpg" alt="BBQ House">
         <div class="card-info">
           <div class="rating">4.5</div>
@@ -157,7 +157,7 @@
           <p>Бар · $$$$ · Новогиреево</p>
           <p>До 23:00</p>
         </div>
-      </div>
+      </a>
     </div>
   </section>
 </main>
