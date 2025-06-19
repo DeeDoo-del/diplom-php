@@ -68,7 +68,7 @@ $avatar_url = $avatar && file_exists($avatar) ? $avatar : 'assets/img/avatar.png
 
 <main>
   <section class="profile-section" style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;flex-direction:row;">
-    <div style="max-width:340px;width:100%;margin:0;">
+    <div style="max-width:340px;width:100%;margin:0;flex:1 1 340px;">
       <form method="post" class="profile-form" enctype="multipart/form-data">
         <h2 style="margin-bottom:16px;">Профиль</h2>
         <?php if($profile_error): ?>
@@ -101,7 +101,7 @@ $avatar_url = $avatar && file_exists($avatar) ? $avatar : 'assets/img/avatar.png
         </div>
       </form>
     </div>
-    <div class="profile-booking-card booking-wide-center" style="margin:0;">
+    <div class="profile-booking-card" style="flex:0 0 370px;max-width:370px;width:100%;margin:0;">
       <?php
       $sql = "SELECT * FROM restaurants LIMIT 1";
       $result = $conn->query($sql);

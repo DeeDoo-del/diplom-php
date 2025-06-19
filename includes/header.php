@@ -14,7 +14,7 @@
     <?php if(isset($_SESSION['user'])): ?>
       <?php $avatar = isset($_SESSION['user']['avatar']) && file_exists($_SESSION['user']['avatar']) ? $_SESSION['user']['avatar'] : 'assets/img/avatar.png'; ?>
       <a href="account.php" class="profile-avatar" title="Личный кабинет">
-        <img src="<?= htmlspecialchars($avatar) ?>" alt="Профиль" style="width:32px;height:32px;border-radius:50%;vertical-align:middle;object-fit:cover;">
+        <img src="<?= htmlspecialchars($avatar) ?>" alt="Профиль" style="width:64px;height:64px;border-radius:50%;vertical-align:middle;object-fit:cover;">
         <span style="margin-left:8px;vertical-align:middle;">Аккаунт</span>
       </a>
     <?php else: ?>
